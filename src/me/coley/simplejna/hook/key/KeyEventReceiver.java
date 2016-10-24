@@ -1,4 +1,4 @@
-package me.coley.jnathread.hook.key;
+package me.coley.simplejna.hook.key;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;

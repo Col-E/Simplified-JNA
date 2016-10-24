@@ -1,4 +1,4 @@
-package me.coley.jnathread.hook.mouse;
+package me.coley.simplejna.hook.mouse;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;
@@ -6,9 +6,9 @@ import com.sun.jna.platform.win32.WinDef.LPARAM;
 import com.sun.jna.platform.win32.WinDef.LRESULT;
 import com.sun.jna.platform.win32.WinDef.WPARAM;
 
-import me.coley.jnathread.hook.mouse.struct.LowLevelMouseProc;
-import me.coley.jnathread.hook.mouse.struct.MOUSEHOOKSTRUCT;
-import me.coley.jnathread.hook.mouse.struct.MouseButtonType;
+import me.coley.simplejna.hook.mouse.struct.LowLevelMouseProc;
+import me.coley.simplejna.hook.mouse.struct.MOUSEHOOKSTRUCT;
+import me.coley.simplejna.hook.mouse.struct.MouseButtonType;
 
 /**
  * A simplified representation of a LowLevelMouseProc.

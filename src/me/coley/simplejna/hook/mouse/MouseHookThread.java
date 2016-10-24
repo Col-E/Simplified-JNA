@@ -1,4 +1,4 @@
-package me.coley.jnathread.hook.key;
+package me.coley.simplejna.hook.mouse;
 
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.User32;
@@ -6,16 +6,16 @@ import com.sun.jna.platform.win32.WinUser;
 import com.sun.jna.platform.win32.WinUser.HHOOK;
 import com.sun.jna.platform.win32.WinUser.MSG;
 
-class KeyHookThread extends Thread {
+class MouseHookThread extends Thread {
 	private HHOOK hhk;
-	private KeyEventReceiver eventReceiver;
+	private MouseEventReceiver eventReceiver;
 
-	public KeyHookThread(KeyEventReceiver eventReceiver) {
+	public MouseHookThread(MouseEventReceiver eventReceiver) {
 		this.eventReceiver = eventReceiver;
 	}
 
 	public void run() {
-		hhk = User32.INSTANCE.SetWindowsHookEx(WinUser.WH_KEYBOARD_LL, eventReceiver, Kernel32.INSTANCE.GetModuleHandle(null), 0);
+		hhk = User32.INSTANCE.SetWindowsHookEx(WinUser.WH_MOUSE_LL, eventReceiver, Kernel32.INSTANCE.GetModuleHandle(null), 0);
 		int result;
 		MSG msg = new MSG();
 		while ((result = User32.INSTANCE.GetMessage(msg, null, 0, 0)) != 0) {

@@ -1,4 +1,4 @@
-package me.coley.jnathread;
+package me.coley.simplejna;
 
 import com.sun.jna.platform.win32.User32;
 

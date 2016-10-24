@@ -1,4 +1,4 @@
-package me.coley.jnathread.hook.key;
+package me.coley.simplejna.hook.key;
 
 import java.util.HashMap;
 import java.util.Map;

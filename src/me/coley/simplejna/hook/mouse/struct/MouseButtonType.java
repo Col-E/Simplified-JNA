@@ -1,4 +1,4 @@
-package me.coley.jnathread.hook.mouse.struct;
+package me.coley.simplejna.hook.mouse.struct;
 
 import java.util.HashMap;
 import java.util.Map;

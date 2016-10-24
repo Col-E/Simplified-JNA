@@ -1,4 +1,4 @@
-package me.coley.jnathread;
+package me.coley.simplejna;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,11 +1,11 @@
-package me.coley.jnathread.hook.mouse;
+package me.coley.simplejna.hook.mouse;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import com.sun.jna.platform.win32.WinUser.HHOOK;
 
-import me.coley.jnathread.hook.mouse.struct.LowLevelMouseProc;
+import me.coley.simplejna.hook.mouse.struct.LowLevelMouseProc;
 
 /**
  * A registrar for keeping track of mouse event receivers.
