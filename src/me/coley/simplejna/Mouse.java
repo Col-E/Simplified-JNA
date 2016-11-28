@@ -6,6 +6,9 @@ import com.sun.jna.platform.win32.WinDef.DWORD;
 import com.sun.jna.platform.win32.WinDef.LONG;
 import com.sun.jna.platform.win32.WinUser.INPUT;
 
+/**
+ * Mouse related methods and values.
+ */
 public class Mouse {
     public static final int MOUSEEVENTF_MOVE = 1;
     public static final int MOUSEEVENTF_LEFTDOWN = 2;
