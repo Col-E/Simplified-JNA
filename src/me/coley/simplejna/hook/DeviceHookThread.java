@@ -6,16 +6,34 @@ import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinUser.HHOOK;
 import com.sun.jna.platform.win32.WinUser.MSG;
 
+/**
+ * Abstract head for listening to windows hooks.
+ * 
+ * @author Matt
+ *
+ * @param <H>
+ *            Type of event receiver.
+ */
 public abstract class DeviceHookThread<H extends DeviceEventReceiver<?>> extends Thread {
+	/**
+	 * Hook receiver. Events are passed to the receiver.
+	 */
 	private final H eventReceiver;
+	/**
+	 * Event structure.
+	 */
 	private final MSG msg = new MSG();
+	/**
+	 * Type of hook. For example:
+	 * <ul>
+	 * <li>WinUser.WH_KEYBOARD_LL</li>
+	 * <li>WinUser.WH_MOUSE_LL</li>
+	 * </ul>
+	 */
 	private final int hookType;
 	/**
-	 * <b>Note</b>: This is not declared in the constructor for performance
-	 * reasons. Doing so causes MASSIVE input lag on hooked devices. This is due
-	 * to the fact it's being instantiated on the main thread, whereas
-	 * instantiation in the {@link #run()} method is done so on another thread.
-	 * Because of reasons, this doesn't cause massive input delays.
+	 * <b>Note</b>: Declared in {@link #run()} for thread synchronization. If
+	 * declared on the main thread, expect massive input lag.
 	 */
 	private HHOOK hhk;
 
@@ -41,25 +59,47 @@ public abstract class DeviceHookThread<H extends DeviceEventReceiver<?>> extends
 		unhook();
 	}
 
+	/**
+	 * Event message value.
+	 * 
+	 * @return {@code 0} for failure, otherwise indicated some other sort of update.
+	 */
 	private int getMessage() {
 		return User32.INSTANCE.GetMessage(msg, null, 0, 0);
 	}
 
+	/**
+	 * Update event structure.
+	 */
 	private void dispatchEvent() {
 		User32.INSTANCE.TranslateMessage(msg);
 		User32.INSTANCE.DispatchMessage(msg);
 	}
 
+	/**
+	 * Called when event structure could not be updated.
+	 */
 	protected abstract void onFail();
 
-	public void unhook() {
-		User32.INSTANCE.UnhookWindowsHookEx(hhk);
+	/**
+	 * Unregister hook from manager.
+	 * 
+	 * @return Successful.
+	 */
+	public boolean unhook() {
+		return User32.INSTANCE.UnhookWindowsHookEx(hhk);
 	}
 
+	/**
+	 * @return Receiver to handle hooked event data.
+	 */
 	public H getEventReceiver() {
 		return eventReceiver;
 	}
 
+	/**
+	 * @return Windows hook instance.
+	 */
 	public HHOOK getHHK() {
 		return hhk;
 	}

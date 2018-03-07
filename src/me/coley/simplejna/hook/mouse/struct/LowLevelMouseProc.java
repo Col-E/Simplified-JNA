@@ -11,5 +11,5 @@ import com.sun.jna.platform.win32.WinUser.HOOKPROC;
  *
  */
 public interface LowLevelMouseProc extends HOOKPROC {
-    public LRESULT callback(int nCode, WPARAM wParam, MOUSEHOOKSTRUCT info);
+	public LRESULT callback(int nCode, WPARAM wParam, MOUSEHOOKSTRUCT info);
 }

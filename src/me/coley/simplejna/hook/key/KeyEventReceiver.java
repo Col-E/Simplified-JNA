@@ -14,11 +14,10 @@ import me.coley.simplejna.hook.DeviceEventReceiver;
  * A simplified representation of JNA's LowLevelKeyboardProc.
  * 
  * @author Matt
- *
  */
 public abstract class KeyEventReceiver extends DeviceEventReceiver<KeyHookManager> implements LowLevelKeyboardProc {
-	public static final int WM_KEYDOWN = 256, WM_KEYUP = 257;
-	public static final int WM_SYSKEYDOWN = 260, WM_SYSKEYUP = 261;
+	private static final int WM_KEYDOWN = 256, WM_KEYUP = 257;
+	private static final int WM_SYSKEYDOWN = 260, WM_SYSKEYUP = 261;
 
 	public KeyEventReceiver(KeyHookManager hookManager) {
 		super(hookManager);
@@ -27,15 +26,7 @@ public abstract class KeyEventReceiver extends DeviceEventReceiver<KeyHookManage
 	@Override
 	public LRESULT callback(int nCode, WPARAM wParam, KBDLLHOOKSTRUCT info) {
 		int code = wParam.intValue();
-		boolean cancel = false;
-		boolean alt = code == WM_SYSKEYDOWN || code == WM_SYSKEYUP;
-		boolean up = code == WM_SYSKEYUP || code == WM_KEYUP;
-		boolean down = code == WM_SYSKEYDOWN || code == WM_KEYDOWN;
-		if (down) {
-			cancel = onKeyPress(alt, info.vkCode);
-		} else if (up) {
-			cancel = onKeyRelease(alt, info.vkCode);
-		}
+		boolean cancel = onKeyUpdate(SystemState.from(code), PressState.from(code), info.time, info.vkCode);
 		if (cancel) {
 			return new LRESULT(1);
 		}
@@ -45,24 +36,46 @@ public abstract class KeyEventReceiver extends DeviceEventReceiver<KeyHookManage
 	}
 
 	/**
-	 * Called when a key is released. Returning true will cancel the event.
+	 * Called when a key-state is updated.
 	 * 
-	 * @param sys
-	 *            Alt key is pressed.
+	 * @param sysState
+	 *            System <i>(alt key)</i> or standard state when event fired.
+	 * @param pressState
+	 *            Up or down state of event.
+	 * @param time
+	 *            Time of event.
 	 * @param vkCode
 	 *            Key-code.
-	 * @return Event cancellation
+	 * @return {@code true} if event is to be cancelled <i>(not handled by
+	 *         windows)</i>. {@code false} if event is to be handled normally.
 	 */
-	public abstract boolean onKeyRelease(boolean sys, int vkCode);
+	public abstract boolean onKeyUpdate(SystemState sysState, PressState pressState, int time, int vkCode);
 
 	/**
-	 * Called when a key is pressed. Returning true will cancel the event.
+	 * System-key status.
 	 * 
-	 * @param sys
-	 *            Alt key is pressed.
-	 * @param vkCode
-	 *            Key-code.
-	 * @return Event cancellation
+	 * @author Matt
 	 */
-	public abstract boolean onKeyPress(boolean sys, int vkCode);
+	enum SystemState {
+		SYSTEM, STANDARD;
+
+		public static SystemState from(int code) {
+			return (code == WM_SYSKEYDOWN || code == WM_SYSKEYUP) ? SYSTEM : STANDARD;
+		}
+	}
+
+	/**
+	 * Up or down status.
+	 * 
+	 * @author Matt
+	 */
+	enum PressState {
+		UP, DOWN, UNKNOWN;
+
+		public static PressState from(int code) {
+			boolean up = code == WM_SYSKEYUP || code == WM_KEYUP;
+			boolean down = code == WM_SYSKEYDOWN || code == WM_KEYDOWN;
+			return (up) ? UP : (down) ? DOWN : UNKNOWN;
+		}
+	}
 }

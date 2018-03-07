@@ -4,11 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum MouseButtonType {
-	//@formatter:off
-	LEFT_DOWN(513), LEFT_UP(514),
-	RIGHT_DOWN(516), RIGHT_UP(517),
-	MIDDLE_DOWN(519), MIDDLE_UP(520);
-	//@formatter:on
+	// @formatter:off
+	LEFT_DOWN(513), LEFT_UP(514), RIGHT_DOWN(516), RIGHT_UP(517), MIDDLE_DOWN(519), MIDDLE_UP(520);
+	// @formatter:on
 	private static Map<Integer, MouseButtonType> types;
 
 	MouseButtonType(int value) {
