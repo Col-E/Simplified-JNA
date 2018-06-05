@@ -56,6 +56,8 @@ public abstract class MouseEventReceiver extends DeviceEventReceiver<MouseHookMa
 	 * 
 	 * @param type
 	 *            Type is press <i>(Left, Right, Middle)</i>
+	 * @param hwnd
+	 *            Window handle that receives the event.
 	 * @param info
 	 *            Mouse information.
 	 * @return Event cancellation
@@ -78,6 +80,8 @@ public abstract class MouseEventReceiver extends DeviceEventReceiver<MouseHookMa
 	 * 
 	 * @param down
 	 *            Scroll event is down <i>(Negative movement)</i>
+	 * @param hwnd
+	 *            Window handle that receives the event.
 	 * @param info
 	 *            Mouse information.
 	 * @return Event cancellation
@@ -87,6 +91,8 @@ public abstract class MouseEventReceiver extends DeviceEventReceiver<MouseHookMa
 	/**
 	 * Called when the mouse wheel is moved. Returning true will cancel the event.
 	 * 
+	 * @param hwnd
+	 *            Window handle that receives the event.
 	 * @param info
 	 *            Mouse information.
 	 * @return Event cancellation

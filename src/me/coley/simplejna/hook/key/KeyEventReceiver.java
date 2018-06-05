@@ -56,7 +56,7 @@ public abstract class KeyEventReceiver extends DeviceEventReceiver<KeyHookManage
 	 * 
 	 * @author Matt
 	 */
-	enum SystemState {
+	public enum SystemState {
 		SYSTEM, STANDARD;
 
 		public static SystemState from(int code) {
@@ -69,7 +69,7 @@ public abstract class KeyEventReceiver extends DeviceEventReceiver<KeyHookManage
 	 * 
 	 * @author Matt
 	 */
-	enum PressState {
+	public enum PressState {
 		UP, DOWN, UNKNOWN;
 
 		public static PressState from(int code) {
