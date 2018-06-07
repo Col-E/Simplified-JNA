@@ -1,7 +1,28 @@
 # About
 Simplified JNA is a library that allows for the quick creation of mouse and keyboard hooks in a multithreaded environment. Additionally it provides easy to use methods for sending inputs to window, mouse, and keyboard objects. 
+
 # Usage
-JNA and JNA-platform must be imported into a project in order to use Simplified JNA. Currently only windows is supported.
+
+You can import this with maven via JitPack:
+
+Add the repo to your pom:
+```
+	<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+```
+And add the dependency:
+```
+	<dependency>
+	    <groupId>com.github.Col-E</groupId>
+	    <artifactId>Simplified-JNA</artifactId>
+	    <version>1.0</version>
+	</dependency>
+```
+
 #### Examples
 
 In these samples, returing `false` allows the event to be parsed by the system. Chaning the return value to `true` will cancel the event.
